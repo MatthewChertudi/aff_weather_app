@@ -1,6 +1,7 @@
 export type DailyData = {
     date: any;
-    temp: any;
+    min: any;
+    max: any;
     weather_state: any;
     weather_icon: any;
     weather_description: any;

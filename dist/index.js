@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const node_fetch_1 = __importDefault(require("node-fetch"));
+const index_1 = require("./app/services/index");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = process.env.PORT;
@@ -34,10 +35,11 @@ app.get('/', (_req, res) => {
         .then(weather_data => {
         let daily = (weather_data) => {
             let daily_forecasts = [];
-            for (let i = 0; i < 7; i++) {
+            for (let i = 1; i < 8; i++) {
                 daily_forecasts.push({
-                    date: weather_data.daily[i].dt,
-                    temp: Math.round(weather_data.daily[i].temp.day),
+                    date: (0, index_1.getDayOfWeekFromUTC)(parseInt(weather_data.daily[i].dt), parseInt(weather_data.timezone_offset)),
+                    min: Math.round(weather_data.daily[i].temp.min),
+                    max: Math.round(weather_data.daily[i].temp.max),
                     weather_state: weather_data.daily[i].weather[0].main,
                     weather_icon: weather_data.daily[i].weather[0].icon,
                     weather_description: weather_data.daily[i].weather[0].description,
@@ -49,7 +51,7 @@ app.get('/', (_req, res) => {
         };
         aggregateData = {
             current: {
-                today: weather_data.current.dt,
+                today: (0, index_1.getDateFromUTC)(parseInt(weather_data.current.dt), parseInt(weather_data.timezone_offset)),
                 temp: Math.round(weather_data.current.temp),
                 feels_like: 
                 //Check if the "Feels Like" temp is signficantly different from actual temp, otherwise return an empty string (falsy).
