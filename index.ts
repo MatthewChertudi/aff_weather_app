@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import fetch from 'node-fetch';
+import { AggregateData } from './app/types/types';
 
 
 dotenv.config();
@@ -9,33 +10,6 @@ const app: Express = express();
 const port = process.env.PORT;
 const lat = process.env.LAT;
 const lon = process.env.LON;
-
-
-//Extract types later
-type DailyData = {
-    date: any;
-    temp: any;
-    weather_state: any;
-    weather_icon: any;
-    weather_description: any;
-    wind_speed: any;
-    wind_direction: any;
-}[];
-
-
-type AggregateData = {
-    current: {
-        today: any;
-        temp: any;
-        feels_like: any;
-        weather_state: any;
-        weather_icon: any;
-        weather_description: any;
-        wind_speed: any;
-        wind_direction: any;
-    };
-    daily: DailyData
-}
 
 app.get('/', (_req: Request, res: Response) => {
 
