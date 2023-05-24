@@ -1,3 +1,4 @@
+<% console.log(weather_data) %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +12,92 @@
   <link rel="stylesheet" href="../public/css/global.css"> 
 </head>
 <body>
-  <p><%= JSON.stringify(weather_data) %></p>
+  <div class="container">
+    <div class="header">
+      <h1>WAFF SuperWeather</h1>
+      <p>Get a comprehensive 7-day weather forecast with WAFF SuperWeather.</p>
+    </div>
+    <div class="search">
+      <form action="/search" method="POST">
+        <input type="text" name="zip" pattern="\d*" placeholder="Enter city zip-code" required>
+        <button type="submit">Search</button>
+      </form>
+    </div>
+    <div class="weather-content">
+
+        <div class="todays-weather">
+            <h3><%= weather_data.location %></h3>
+            <h2><%= weather_data.current.temp %>°F</h2>
+            <p><%= weather_data.current.weather_state %></p>
+            <div class="weather-icon">
+                src="<%= weather_data.current.weather_icon %>.png"
+            </div>
+            <div class="todays-weather__hi-lo">
+                <p>H: <%= weather_data.current.max_temp %>°F</p>
+                <p>L: <%= weather_data.current.min_temp %>°F</p>
+            </div>
+        </div>
+
+        <%# TODO: Reverse test, add weather_data.alert to paragraph %>
+        <% if(!weather_data.alert) { %>
+        <div class="weather-alert">
+            <h3>Weather Alert</h3>
+            <p>Weather alert description.</p>
+        </div>
+        <% } %>
+
+        <div class="details-grid">
+          <div class="details-grid__seven-day-forecast">
+            <h3>7-Day Forecast</h3>
+            <% for (let i = 1; i < 8; i++) { %>
+              <div class="seven-day-forecast__day">
+                <p><%= weather_data.daily[i].date %></p>
+                <%# TODO: implement weather icons %>
+                <p><%= weather_data.daily[i].weather_icon %>.png</p>
+                <p class="seven-day-forecast__day__low">L: <%= weather_data.daily[i].min %></p>
+                <p class="seven-day-forecast__day__high">H: <%= weather_data.daily[i].max %></p>
+              </div>
+            <% } %>
+            <div class="uv-index-and-others">
+              <div class="uv-index">
+                <h3>UV Index</h3>
+                <p>Current UV index: <%= weather_data.current.uv_index %></p>
+              </div>
+              <div class="others">
+                <div class="others__one-by-one">
+                  <h3>Wind Speed</h3>
+                  <p><%= weather_data.current.wind_speed %>mph</p>
+                  <p><%= weather_data.current.wind_direction %></p>
+                </div>
+                <div class="others__one-by-one">
+                  <h3>Feels Like</h3>
+                  <h4><%= weather_data.current.feels_like %>°F</h4>
+                </div>
+                <div class="others__one-by-one">
+                  <h3>Humidity</h3>
+                  <h4><%= weather_data.current.humidity %>%</h4>
+                  
+                </div>
+                <div class="others__one-by-one">
+                  <h3>Precipitation</h3>
+                  <% if(!weather_data.current.snow) { %>
+                    <h4>Rain</h4><%# TODO: Replace with rain icon 10n.png  %>
+                    <p>Last hour: <%= weather_data.current.rain %>mm</p>
+                    <p>Today: <%= weather_data.daily[1].total_rain %>mm</p>
+                  <% } else { %>
+                    <h4>Snow</h4><%# TODO: Replace with snow icon 13d.png  %>
+                    <p>Last hour: <%= weather_data.current.snow %>mm</p>
+                    <p>Today: <%= weather_data.daily[1].total_snow %>mm</p>
+                  <% } %>
+                </div>
+            </div>
+          </div>
+        </div>
+
+    </div>
+    <div class="footer">
+      <p>WAFF SuperWeather &copy; 2023</p>
+    </div>
 
   <script src="script.js"></script> <!-- Link to your JavaScript file -->
 </body>

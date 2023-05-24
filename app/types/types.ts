@@ -12,6 +12,7 @@ export type DailyData = {
 
 export type AggregateData = {
     location: string;
+    alert: string;
     current: {
         today: any;
         temp: any;
@@ -21,6 +22,10 @@ export type AggregateData = {
         weather_description: any;
         wind_speed: any;
         wind_direction: any;
+        uv_index: any;
+        humidity: any;
+        rain: any;
+        snow: any;
     };
     daily: DailyData
 }

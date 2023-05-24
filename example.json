@@ -1,0 +1,121 @@
+{
+    "location": "Boise",
+    "alert": "",
+    "current": {
+        "today": "May 23",
+        "temp": 65,
+        "feels_like": 62.78,
+        "weather_state": "Clear",
+        "weather_icon": "01n",
+        "weather_description": "clear sky",
+        "wind_speed": 7,
+        "wind_direction": 300,
+        "uv_index": 0
+    },
+    "daily": [
+        {
+            "date": "Tuesday",
+            "min": 52,
+            "max": 69,
+            "weather_state": "Clouds",
+            "weather_icon": "04d",
+            "weather_description": "overcast clouds",
+            "wind_speed": 11,
+            "wind_direction": 305,
+            "chance_of_rain": 13,
+            "total_rain": 0,
+            "total_snow": 0
+        },
+        {
+            "date": "Wednesday",
+            "min": 52,
+            "max": 73,
+            "weather_state": "Clouds",
+            "weather_icon": "04d",
+            "weather_description": "broken clouds",
+            "wind_speed": 12,
+            "wind_direction": 315,
+            "chance_of_rain": 2,
+            "total_rain": 0,
+            "total_snow": 0
+        },
+        {
+            "date": "Thursday",
+            "min": 51,
+            "max": 76,
+            "weather_state": "Clouds",
+            "weather_icon": "04d",
+            "weather_description": "overcast clouds",
+            "wind_speed": 8,
+            "wind_direction": 301,
+            "chance_of_rain": 0,
+            "total_rain": 0,
+            "total_snow": 0
+        },
+        {
+            "date": "Friday",
+            "min": 55,
+            "max": 75,
+            "weather_state": "Clouds",
+            "weather_icon": "04d",
+            "weather_description": "overcast clouds",
+            "wind_speed": 10,
+            "wind_direction": 278,
+            "chance_of_rain": 9,
+            "total_rain": 0,
+            "total_snow": 0
+        },
+        {
+            "date": "Saturday",
+            "min": 54,
+            "max": 77,
+            "weather_state": "Rain",
+            "weather_icon": "10d",
+            "weather_description": "light rain",
+            "wind_speed": 12,
+            "wind_direction": 317,
+            "chance_of_rain": 34,
+            "total_rain": 0,
+            "total_snow": 0
+        },
+        {
+            "date": "Sunday",
+            "min": 56,
+            "max": 79,
+            "weather_state": "Rain",
+            "weather_icon": "10d",
+            "weather_description": "light rain",
+            "wind_speed": 16,
+            "wind_direction": 286,
+            "chance_of_rain": 69,
+            "total_rain": 3,
+            "total_snow": 0
+        },
+        {
+            "date": "Monday",
+            "min": 57,
+            "max": 80,
+            "weather_state": "Clear",
+            "weather_icon": "01d",
+            "weather_description": "clear sky",
+            "wind_speed": 10,
+            "wind_direction": 305,
+            "chance_of_rain": 0,
+            "total_rain": 0,
+            "total_snow": 0
+        },
+        {
+            "date": "Tuesday",
+            "min": 57,
+            "max": 80,
+            "weather_state": "Clear",
+            "weather_icon": "01d",
+            "weather_description": "clear sky",
+            "wind_speed": 10,
+            "wind_direction": 305,
+            "chance_of_rain": 0,
+            "total_rain": 0,
+            "total_snow": 0
+        }
+    ]
+}

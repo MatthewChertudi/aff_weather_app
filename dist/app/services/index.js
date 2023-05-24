@@ -34,19 +34,29 @@ function getDateFromUTC(timecode, offset) {
     const day = date.getDate();
     return `${month} ${day}`;
 }
+function convertDegreesToDirection(degrees) {
+    const directions = ['North', 'Northeast', 'East', 'Southeast', 'South', 'Southwest', 'West', 'Northwest'];
+    const index = Math.round(degrees / 45);
+    return directions[index];
+}
 function getWeatherData(res, url) {
     return __awaiter(this, void 0, void 0, function* () {
         let aggregateData = {
             location: '',
+            alert: '',
             current: {
                 today: '',
                 temp: '',
+                rain: '',
+                snow: '',
                 feels_like: '',
                 weather_state: '',
                 weather_icon: '',
                 weather_description: '',
                 wind_speed: '',
                 wind_direction: '',
+                uv_index: '',
+                humidity: '',
             },
             daily: [],
         };
@@ -64,7 +74,7 @@ function getWeatherData(res, url) {
                         weather_icon: weather_data.daily[i].weather[0].icon,
                         weather_description: weather_data.daily[i].weather[0].description,
                         wind_speed: Math.round(weather_data.daily[i].wind_speed),
-                        wind_direction: weather_data.daily[i].wind_deg,
+                        wind_direction: convertDegreesToDirection(weather_data.daily[i].wind_deg),
                         chance_of_rain: Math.round(weather_data.daily[i].pop * 100),
                         total_rain: weather_data.daily[i].rain ? Math.round(weather_data.daily[i].rain) : 0,
                         total_snow: weather_data.daily[i].snow ? Math.round(weather_data.daily[i].snow) : 0,
@@ -74,15 +84,20 @@ function getWeatherData(res, url) {
             };
             aggregateData = {
                 location: getLocation(weather_data.timezone),
+                alert: weather_data.alerts ? weather_data.alerts[0].description : '',
                 current: {
                     today: getDateFromUTC(parseInt(weather_data.current.dt), parseInt(weather_data.timezone_offset)),
                     temp: Math.round(weather_data.current.temp),
-                    feels_like: weather_data.current.feels_like,
+                    feels_like: Math.round(weather_data.current.feels_like),
                     weather_state: weather_data.current.weather[0].main,
                     weather_icon: weather_data.current.weather[0].icon,
                     weather_description: weather_data.current.weather[0].description,
                     wind_speed: Math.round(weather_data.current.wind_speed),
-                    wind_direction: weather_data.current.wind_deg,
+                    wind_direction: convertDegreesToDirection(weather_data.current.wind_deg),
+                    uv_index: weather_data.current.uvi,
+                    humidity: weather_data.current.humidity,
+                    rain: weather_data.current.rain ? Math.round(weather_data.current.rain['1h']) : 0,
+                    snow: weather_data.current.snow ? Math.round(weather_data.current.snow['1h']) : 0,
                 },
                 daily: daily(weather_data),
             };
