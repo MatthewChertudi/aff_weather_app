@@ -1,8 +1,13 @@
-import { NextFunction, Response } from 'express';
+import { Response } from 'express';
 import fetch from 'node-fetch';
 import { AggregateData } from '../types/types';
 
-export function getDayOfWeekFromUTC(timecode: number, offset: number): string {
+function getLocation(locationPair: string): string {
+  const [country, city] = locationPair.split('/');
+  return city.trim();
+}
+
+function getDayOfWeekFromUTC(timecode: number, offset: number): string {
   const utcMilliseconds = timecode * 1000; // Convert seconds to milliseconds
   const offsetMilliseconds = offset * 1000; // Convert hours to milliseconds
   const date = new Date(utcMilliseconds + offsetMilliseconds);
@@ -12,7 +17,7 @@ export function getDayOfWeekFromUTC(timecode: number, offset: number): string {
   return dayOfWeek;
 }
 
-export function getDateFromUTC(timecode: number, offset: number): string {
+function getDateFromUTC(timecode: number, offset: number): string {
   const utcMilliseconds = timecode * 1000; // Convert seconds to milliseconds
   const offsetMilliseconds = offset * 1000; // Convert hours to milliseconds
 
@@ -25,6 +30,7 @@ export function getDateFromUTC(timecode: number, offset: number): string {
 
 export async function getWeatherData(res: Response, url: string): Promise<AggregateData> {
   let aggregateData: AggregateData = {
+    location: '',
     current: {
       today: '',
       temp: '',
@@ -74,6 +80,7 @@ export async function getWeatherData(res: Response, url: string): Promise<Aggreg
       return daily_forecasts;
     };
     aggregateData = {
+      location: getLocation(weather_data.timezone),
       current: {
         today: getDateFromUTC(parseInt(weather_data.current.dt), parseInt(weather_data.timezone_offset)), //UTC Timestamp
         temp: Math.round(weather_data.current.temp),

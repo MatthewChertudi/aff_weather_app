@@ -17,12 +17,8 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const index_1 = require("./app/services/index");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
-app.set('view engine', 'ejs');
 const port = process.env.PORT;
-const user = {
-    firstName: 'Tim',
-    lastName: 'Cook',
-};
+app.set('view engine', 'ejs');
 app.get('/', (_req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     let lat = process.env.LAT;
     let lon = process.env.LON;
@@ -33,10 +29,7 @@ app.get('/', (_req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
 }), (_req, res) => {
     // console.log(res.locals.weather_data)
     let weather_data = res.locals.weather_data;
-    res.render('index', {
-        user: user
-    });
-    // res.send(res.locals.weather_data)
+    res.render('index');
 });
 //TODO: app.get with params
 //TODO: app.post handler for form submission

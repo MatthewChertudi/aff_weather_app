@@ -12,8 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getWeatherData = exports.getDateFromUTC = exports.getDayOfWeekFromUTC = void 0;
+exports.getWeatherData = void 0;
 const node_fetch_1 = __importDefault(require("node-fetch"));
+function getLocation(locationPair) {
+    const [country, city] = locationPair.split('/');
+    return city.trim();
+}
 function getDayOfWeekFromUTC(timecode, offset) {
     const utcMilliseconds = timecode * 1000; // Convert seconds to milliseconds
     const offsetMilliseconds = offset * 1000; // Convert hours to milliseconds
@@ -22,7 +26,6 @@ function getDayOfWeekFromUTC(timecode, offset) {
     const dayOfWeek = daysOfWeek[date.getUTCDay()];
     return dayOfWeek;
 }
-exports.getDayOfWeekFromUTC = getDayOfWeekFromUTC;
 function getDateFromUTC(timecode, offset) {
     const utcMilliseconds = timecode * 1000; // Convert seconds to milliseconds
     const offsetMilliseconds = offset * 1000; // Convert hours to milliseconds
@@ -31,10 +34,10 @@ function getDateFromUTC(timecode, offset) {
     const day = date.getDate();
     return `${month} ${day}`;
 }
-exports.getDateFromUTC = getDateFromUTC;
 function getWeatherData(res, url) {
     return __awaiter(this, void 0, void 0, function* () {
         let aggregateData = {
+            location: '',
             current: {
                 today: '',
                 temp: '',
@@ -70,6 +73,7 @@ function getWeatherData(res, url) {
                 return daily_forecasts;
             };
             aggregateData = {
+                location: getLocation(weather_data.timezone),
                 current: {
                     today: getDateFromUTC(parseInt(weather_data.current.dt), parseInt(weather_data.timezone_offset)),
                     temp: Math.round(weather_data.current.temp),

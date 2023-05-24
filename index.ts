@@ -2,19 +2,14 @@ import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import { getWeatherData } from './app/services/index';
 
-
-
 dotenv.config();
 
 const app: Express = express();
+const port = process.env.PORT;
 
 app.set('view engine', 'ejs');
 
-const port = process.env.PORT;
-const user = {
-    firstName: 'Tim',
-    lastName: 'Cook',
-}
+
 
 app.get('/', async (_req: Request, res: Response, next) => {
     let lat = process.env.LAT;
@@ -28,10 +23,7 @@ app.get('/', async (_req: Request, res: Response, next) => {
     (_req: Request, res: Response) => {
         // console.log(res.locals.weather_data)
         let weather_data = res.locals.weather_data
-        res.render('index', {
-            user: user
-        })
-        // res.send(res.locals.weather_data)
+        res.render('index')
     });
 
 //TODO: app.get with params
