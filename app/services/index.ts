@@ -1,11 +1,9 @@
 import { Response } from 'express';
 import fetch from 'node-fetch';
 import { AggregateData } from '../types/types';
+import dotenv from 'dotenv';
 
-function getLocation(locationPair: string): string {
-  const [country, city] = locationPair.split('/');
-  return city.trim();
-}
+dotenv.config();
 
 function getDayOfWeekFromUTC(timecode: number, offset: number): string {
   const utcMilliseconds = timecode * 1000; // Convert seconds to milliseconds
@@ -34,9 +32,23 @@ function convertDegreesToDirection(degrees: number): string {
   return directions[index];
 }
 
-export async function getWeatherData(res: Response, url: string): Promise<AggregateData> {
+export async function getLatLongFromCityName(cityName: string): Promise<{ lat: string; lon: string, name: string }> {
+  try {
+    let api_key = process.env.OPEN_WEATHER_API_KEY;
+    let url = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${api_key}`;
+    const response = await fetch(url);
+    const location = await response.json();
+    console.log(location);
+    
+    return { lat: location[0].lat, lon: location[0].lon, name: location[0].name };
+  } catch (error) {
+    throw (error);
+  }
+}
+
+export async function getWeatherData(res: Response, lat: string, lon: string): Promise<AggregateData> {
+  let api_key = process.env.OPEN_WEATHER_API_KEY;
   let aggregateData: AggregateData = {
-    location: '',
     alert: '',
     current: {
       today: '',
@@ -54,6 +66,8 @@ export async function getWeatherData(res: Response, url: string): Promise<Aggreg
     },
     daily: [],
   };
+
+  let url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${api_key}&units=imperial`;
 
   try {
     const response = await fetch(url);
@@ -91,7 +105,6 @@ export async function getWeatherData(res: Response, url: string): Promise<Aggreg
       return daily_forecasts;
     };
     aggregateData = {
-      location: getLocation(weather_data.timezone),
       alert: weather_data.alerts ? weather_data.alerts[0].description : '',
       current: {
         today: getDateFromUTC(parseInt(weather_data.current.dt), parseInt(weather_data.timezone_offset)), //UTC Timestamp

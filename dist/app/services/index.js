@@ -12,12 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getWeatherData = void 0;
+exports.getWeatherData = exports.getLatLongFromCityName = void 0;
 const node_fetch_1 = __importDefault(require("node-fetch"));
-function getLocation(locationPair) {
-    const [country, city] = locationPair.split('/');
-    return city.trim();
-}
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 function getDayOfWeekFromUTC(timecode, offset) {
     const utcMilliseconds = timecode * 1000; // Convert seconds to milliseconds
     const offsetMilliseconds = offset * 1000; // Convert hours to milliseconds
@@ -39,10 +37,26 @@ function convertDegreesToDirection(degrees) {
     const index = Math.round(degrees / 45);
     return directions[index];
 }
-function getWeatherData(res, url) {
+function getLatLongFromCityName(cityName) {
     return __awaiter(this, void 0, void 0, function* () {
+        try {
+            let api_key = process.env.OPEN_WEATHER_API_KEY;
+            let url = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${api_key}`;
+            const response = yield (0, node_fetch_1.default)(url);
+            const location = yield response.json();
+            console.log(location);
+            return { lat: location[0].lat, lon: location[0].lon, name: location[0].name };
+        }
+        catch (error) {
+            throw (error);
+        }
+    });
+}
+exports.getLatLongFromCityName = getLatLongFromCityName;
+function getWeatherData(res, lat, lon) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let api_key = process.env.OPEN_WEATHER_API_KEY;
         let aggregateData = {
-            location: '',
             alert: '',
             current: {
                 today: '',
@@ -60,6 +74,7 @@ function getWeatherData(res, url) {
             },
             daily: [],
         };
+        let url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${api_key}&units=imperial`;
         try {
             const response = yield (0, node_fetch_1.default)(url);
             const weather_data = yield response.json();
@@ -83,7 +98,6 @@ function getWeatherData(res, url) {
                 return daily_forecasts;
             };
             aggregateData = {
-                location: getLocation(weather_data.timezone),
                 alert: weather_data.alerts ? weather_data.alerts[0].description : '',
                 current: {
                     today: getDateFromUTC(parseInt(weather_data.current.dt), parseInt(weather_data.timezone_offset)),

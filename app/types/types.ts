@@ -11,7 +11,6 @@ export type DailyData = {
 
 
 export type AggregateData = {
-    location: string;
     alert: string;
     current: {
         today: any;

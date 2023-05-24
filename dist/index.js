@@ -20,19 +20,24 @@ const app = (0, express_1.default)();
 const port = process.env.PORT;
 app.set('view engine', 'ejs');
 app.get('/', (_req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    let lat = process.env.LAT;
-    let lon = process.env.LON;
-    let api_key = process.env.OPEN_WEATHER_API_KEY;
-    let url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${api_key}&units=imperial`;
-    res.locals.weather_data = yield (0, index_1.getWeatherData)(res, url);
+    res.locals.location = process.env.LOCATION;
+    res.locals.weather_data = yield (0, index_1.getWeatherData)(res, process.env.LAT, process.env.LON);
     next();
 }), (_req, res) => {
-    // console.log(res.locals.weather_data)
     let weather_data = res.locals.weather_data;
     res.render('index');
 });
 //TODO: app.get with params
 //TODO: app.post handler for form submission
+app.get('/boise', (_req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    let { lat, lon, name } = yield (0, index_1.getLatLongFromCityName)('Portland');
+    res.locals.location = name;
+    res.locals.weather_data = yield (0, index_1.getWeatherData)(res, lat, lon);
+    next();
+}), (_req, res) => {
+    let weather_data = res.locals.weather_data;
+    res.render('index');
+});
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
 });
