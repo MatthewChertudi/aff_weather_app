@@ -45,6 +45,9 @@ export async function getWeatherData(res: Response, url: string): Promise<Aggreg
     let daily = (weather_data: {
       timezone_offset: string;
       daily: {
+        rain: number;
+        snow: number;
+        pop: number;
         dt: any;
         temp: any;
         weather: any;
@@ -53,7 +56,7 @@ export async function getWeatherData(res: Response, url: string): Promise<Aggreg
       }[];
     }) => {
       let daily_forecasts = [];
-      for (let i = 1; i < 8; i++) {
+      for (let i = 0; i < 8; i++) {
         daily_forecasts.push({
           date: getDayOfWeekFromUTC(parseInt(weather_data.daily[i].dt), parseInt(weather_data.timezone_offset)),
           min: Math.round(weather_data.daily[i].temp.min),
@@ -63,6 +66,9 @@ export async function getWeatherData(res: Response, url: string): Promise<Aggreg
           weather_description: weather_data.daily[i].weather[0].description,
           wind_speed: Math.round(weather_data.daily[i].wind_speed),
           wind_direction: weather_data.daily[i].wind_deg,
+          chance_of_rain: Math.round(weather_data.daily[i].pop * 100),
+          total_rain: weather_data.daily[i].rain ? Math.round(weather_data.daily[i].rain) : 0,
+          total_snow: weather_data.daily[i].snow ? Math.round(weather_data.daily[i].snow) : 0,
         });
       }
       return daily_forecasts;
@@ -71,11 +77,7 @@ export async function getWeatherData(res: Response, url: string): Promise<Aggreg
       current: {
         today: getDateFromUTC(parseInt(weather_data.current.dt), parseInt(weather_data.timezone_offset)), //UTC Timestamp
         temp: Math.round(weather_data.current.temp),
-        feels_like:
-          //Check if the "Feels Like" temp is signficantly different from actual temp, otherwise return an empty string (falsy).
-          Math.abs(weather_data.current.temp - weather_data.current.feels_like) > 5
-            ? weather_data.current.feels_like
-            : '',
+        feels_like: weather_data.current.feels_like,
         weather_state: weather_data.current.weather[0].main,
         weather_icon: weather_data.current.weather[0].icon,
         weather_description: weather_data.current.weather[0].description,
