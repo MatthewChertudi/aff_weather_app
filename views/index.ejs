@@ -29,7 +29,7 @@
             <h2><%= weather_data.current.temp %>°F</h2>
             <p><%= weather_data.current.weather_state %></p>
             <div class="weather-icon">
-                src="<%= weather_data.current.weather_icon %>.png"
+                <img src="icons/filled/svg/<%= weather_data.current.weather_icon %>.svg" alt="<%= weather_data.current.weather_state %>">
             </div>
             <div class="todays-weather__hi-lo">
                 <p>H: <%= weather_data.current.max_temp %>°F</p>
@@ -51,8 +51,7 @@
             <% for (let i = 1; i < 8; i++) { %>
               <div class="seven-day-forecast__day">
                 <p><%= weather_data.daily[i].date %></p>
-                <%# TODO: implement weather icons %>
-                <p><%= weather_data.daily[i].weather_icon %>.png</p>
+                <img src="icons/filled/svg/<%= weather_data.daily[i].weather_icon %>.svg" alt="<%= weather_data.daily[i].weather_state %>">
                 <p class="seven-day-forecast__day__low">L: <%= weather_data.daily[i].min %></p>
                 <p class="seven-day-forecast__day__high">H: <%= weather_data.daily[i].max %></p>
               </div>

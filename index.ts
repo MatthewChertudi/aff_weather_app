@@ -7,6 +7,7 @@ dotenv.config();
 const app: Express = express();
 const port = process.env.PORT;
 
+app.use(express.static('public'))
 app.set('view engine', 'ejs');
 
 

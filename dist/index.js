@@ -18,6 +18,7 @@ const index_1 = require("./app/services/index");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = process.env.PORT;
+app.use(express_1.default.static('public'));
 app.set('view engine', 'ejs');
 app.get('/', (_req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     res.locals.location = process.env.LOCATION;
