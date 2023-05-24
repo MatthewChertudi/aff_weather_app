@@ -2,6 +2,7 @@ import { Response } from 'express';
 import fetch from 'node-fetch';
 import { AggregateData } from '../types/types';
 import dotenv from 'dotenv';
+import { getWeatherIcon } from './icons';
 
 dotenv.config();
 
@@ -93,7 +94,7 @@ export async function getWeatherData(res: Response, lat: string, lon: string): P
           min: Math.round(weather_data.daily[i].temp.min),
           max: Math.round(weather_data.daily[i].temp.max),
           weather_state: weather_data.daily[i].weather[0].main,
-          weather_icon: weather_data.daily[i].weather[0].icon,
+          weather_icon: getWeatherIcon(weather_data.daily[i].weather[0].id),
           weather_description: weather_data.daily[i].weather[0].description,
           wind_speed: Math.round(weather_data.daily[i].wind_speed),
           wind_direction: convertDegreesToDirection(weather_data.daily[i].wind_deg),
@@ -111,7 +112,7 @@ export async function getWeatherData(res: Response, lat: string, lon: string): P
         temp: Math.round(weather_data.current.temp),
         feels_like: Math.round(weather_data.current.feels_like),
         weather_state: weather_data.current.weather[0].main,
-        weather_icon: weather_data.current.weather[0].icon,
+        weather_icon: getWeatherIcon(weather_data.current.weather[0].id),
         weather_description: weather_data.current.weather[0].description,
         wind_speed: Math.round(weather_data.current.wind_speed),
         wind_direction: convertDegreesToDirection(weather_data.current.wind_deg),

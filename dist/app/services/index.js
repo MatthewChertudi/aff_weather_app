@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getWeatherData = exports.getLatLongFromCityName = void 0;
 const node_fetch_1 = __importDefault(require("node-fetch"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const icons_1 = require("./icons");
 dotenv_1.default.config();
 function getDayOfWeekFromUTC(timecode, offset) {
     const utcMilliseconds = timecode * 1000; // Convert seconds to milliseconds
@@ -86,7 +87,7 @@ function getWeatherData(res, lat, lon) {
                         min: Math.round(weather_data.daily[i].temp.min),
                         max: Math.round(weather_data.daily[i].temp.max),
                         weather_state: weather_data.daily[i].weather[0].main,
-                        weather_icon: weather_data.daily[i].weather[0].icon,
+                        weather_icon: (0, icons_1.getWeatherIcon)(weather_data.daily[i].weather[0].id),
                         weather_description: weather_data.daily[i].weather[0].description,
                         wind_speed: Math.round(weather_data.daily[i].wind_speed),
                         wind_direction: convertDegreesToDirection(weather_data.daily[i].wind_deg),
@@ -104,7 +105,7 @@ function getWeatherData(res, lat, lon) {
                     temp: Math.round(weather_data.current.temp),
                     feels_like: Math.round(weather_data.current.feels_like),
                     weather_state: weather_data.current.weather[0].main,
-                    weather_icon: weather_data.current.weather[0].icon,
+                    weather_icon: (0, icons_1.getWeatherIcon)(weather_data.current.weather[0].id),
                     weather_description: weather_data.current.weather[0].description,
                     wind_speed: Math.round(weather_data.current.wind_speed),
                     wind_direction: convertDegreesToDirection(weather_data.current.wind_deg),
