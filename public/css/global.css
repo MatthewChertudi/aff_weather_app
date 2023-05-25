@@ -33,6 +33,7 @@ body::before {
     bottom: 0;
     background-image: linear-gradient(to bottom, transparent 95%, rgba(0, 0, 0, 0.05) 97%);
     pointer-events: none;
+    z-index: 50;
 }
 
 body::after {
@@ -44,6 +45,7 @@ body::after {
     bottom: 0;
     background-image: url("/images/crt-scanlines.png");
     opacity: 0.15;
+    z-index: 51;
   }
 
 .container {
@@ -55,6 +57,17 @@ body::after {
     width: 100%;
     max-width: 1280px;
     height: 100%;
+}
+
+.container .search{
+    width: auto;
+    max-width: 526px;
+    background-color: var(--transprent-bg);
+    border-radius: var(--border-radius);
+    padding: 1rem 2rem;
+    margin-bottom: 2rem;
+    z-index: 99;
+    color: #555;
 }
 
 .weather-content {

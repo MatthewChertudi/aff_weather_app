@@ -8,6 +8,7 @@ const app: Express = express();
 const port = process.env.PORT;
 
 app.use(express.static('public'))
+app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
 
@@ -16,20 +17,42 @@ app.get('/', async (_req: Request, res: Response, next) => {
     res.locals.location = process.env.LOCATION;
     res.locals.weather_data = await getWeatherData(res, process.env.LAT!, process.env.LON!);
     next()
-    },
+},
+    (_req: Request, res: Response) => {
+        let weather_data = res.locals.weather_data
+        res.render('index')
+    });
+
+//TODO: app.post handler for form submission
+app.post('/', async (req: Request, res: Response, next) => {
+    let location = req.body.cityName = req.body.city.trim();
+    try {
+        let { lat, lon, name } = await getLatLongFromCityName(location);
+        res.locals.location = name;
+        res.locals.weather_data = await getWeatherData(res, lat, lon);
+        next()
+    }
+   catch (error) {
+    res.redirect('/')
+    }
+},
     (_req: Request, res: Response) => {
         let weather_data = res.locals.weather_data
         res.render('index')
     });
 
 //TODO: app.get with params
-
-//TODO: app.post handler for form submission
-app.get('/boise', async (_req: Request, res: Response, next) => {
-    let { lat, lon, name } = await getLatLongFromCityName('Portland');
-    res.locals.location = name;
-    res.locals.weather_data = await getWeatherData(res, lat, lon);
-    next()
+app.get('/:location', async (_req: Request, res: Response, next) => {
+    let location = _req.params.location;
+    try {
+        let { lat, lon, name } = await getLatLongFromCityName(location);
+        res.locals.location = name;
+        res.locals.weather_data = await getWeatherData(res, lat, lon);
+        next()
+    }
+   catch (error) {
+    res.redirect('/')
+    }
 },
     (_req: Request, res: Response) => {
         let weather_data = res.locals.weather_data

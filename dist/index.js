@@ -19,6 +19,7 @@ dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = process.env.PORT;
 app.use(express_1.default.static('public'));
+app.use(express_1.default.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.get('/', (_req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     res.locals.location = process.env.LOCATION;
@@ -28,13 +29,34 @@ app.get('/', (_req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
     let weather_data = res.locals.weather_data;
     res.render('index');
 });
-//TODO: app.get with params
 //TODO: app.post handler for form submission
-app.get('/boise', (_req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    let { lat, lon, name } = yield (0, index_1.getLatLongFromCityName)('Portland');
-    res.locals.location = name;
-    res.locals.weather_data = yield (0, index_1.getWeatherData)(res, lat, lon);
-    next();
+app.post('/', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    let location = req.body.cityName = req.body.city.trim();
+    try {
+        let { lat, lon, name } = yield (0, index_1.getLatLongFromCityName)(location);
+        res.locals.location = name;
+        res.locals.weather_data = yield (0, index_1.getWeatherData)(res, lat, lon);
+        next();
+    }
+    catch (error) {
+        res.redirect('/');
+    }
+}), (_req, res) => {
+    let weather_data = res.locals.weather_data;
+    res.render('index');
+});
+//TODO: app.get with params
+app.get('/:location', (_req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    let location = _req.params.location;
+    try {
+        let { lat, lon, name } = yield (0, index_1.getLatLongFromCityName)(location);
+        res.locals.location = name;
+        res.locals.weather_data = yield (0, index_1.getWeatherData)(res, lat, lon);
+        next();
+    }
+    catch (error) {
+        res.redirect('/');
+    }
 }), (_req, res) => {
     let weather_data = res.locals.weather_data;
     res.render('index');
