@@ -17,6 +17,7 @@ body {
     justify-content: center;
     height: 100%;
     background-image: url("/images/clouds_background.jpeg");
+    background-size: cover;
     position: relative;
     /* Variables */
     --transprent-bg: rgba(16, 30, 52, 0.3);
@@ -24,8 +25,7 @@ body {
     --bottom-hr: 1px solid rgb(255 255 255 / 25%)
 }
 
-/* TODO: Uncomment to restore scanline effect */
-/* body::before {
+body::before {
     content: "";
     position: absolute;
     top: 0;
@@ -47,7 +47,7 @@ body::after {
     background-image: url("/images/crt-scanlines.png");
     opacity: 0.15;
     z-index: 51;
-  } */
+  }
 
 .container {
     padding: 3rem;
@@ -121,6 +121,10 @@ body::after {
     max-width: 1280px;
     margin-bottom: 2rem;
 
+}
+
+.weather-content .todays-weather {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.675), -2px 2px 4px rgba(0, 0, 0, 0.275);
 }
 
 .weather-content .todays-weather img {
@@ -304,22 +308,12 @@ body::after {
 
 @media screen and (max-width: 1080px) {
 
-    /* TODO: Remove 1080px canary */
-    * {
-        color: hotpink;
-    }
-
     .details-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media screen and (max-width: 768px) {
-
-    /* TODO: Remove 1080px canary */
-    * {
-        color: lime;
-    }
 
     .container .search {
         width: 100%;
@@ -365,10 +359,13 @@ body::after {
         margin-right: 0;
         width: 100%;
     }
-
-    .seven-day-forecast__day .seven-day-forecast__day__high,
-    .seven-day-forecast__day .seven-day-forecast__day__low {
-        width: 4rem;
-        margin-right: 1rem;
+    .seven-day-forecast__day .seven-day-forecast__day__high {
+        margin-right: 0;
+    }
+    .uv-index-and-others .others__one-by-one {
+        grid-column: span 2;
+    }
+    .others__one-by-one .feels-humid {
+        justify-content: center;
     }
 }
