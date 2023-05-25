@@ -39,7 +39,6 @@ export async function getLatLongFromCityName(cityName: string): Promise<{ lat: s
     let url = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${api_key}`;
     const response = await fetch(url);
     const location = await response.json();
-    console.log(location);
     
     return { lat: location[0].lat, lon: location[0].lon, name: location[0].name };
   } catch (error) {

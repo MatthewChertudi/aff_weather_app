@@ -23,25 +23,17 @@ app.get('/', async (_req: Request, res: Response, next) => {
         res.render('index')
     });
 
-//TODO: app.post handler for form submission
 app.post('/', async (req: Request, res: Response, next) => {
     let location = req.body.cityName = req.body.city.trim();
     try {
         let { lat, lon, name } = await getLatLongFromCityName(location);
-        res.locals.location = name;
-        res.locals.weather_data = await getWeatherData(res, lat, lon);
-        next()
+        res.redirect(`/${name}`)
     }
    catch (error) {
     res.redirect('/')
     }
-},
-    (_req: Request, res: Response) => {
-        let weather_data = res.locals.weather_data
-        res.render('index')
-    });
+});
 
-//TODO: app.get with params
 app.get('/:location', async (_req: Request, res: Response, next) => {
     let location = _req.params.location;
     try {

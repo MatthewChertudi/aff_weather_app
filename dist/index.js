@@ -29,23 +29,16 @@ app.get('/', (_req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
     let weather_data = res.locals.weather_data;
     res.render('index');
 });
-//TODO: app.post handler for form submission
 app.post('/', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     let location = req.body.cityName = req.body.city.trim();
     try {
         let { lat, lon, name } = yield (0, index_1.getLatLongFromCityName)(location);
-        res.locals.location = name;
-        res.locals.weather_data = yield (0, index_1.getWeatherData)(res, lat, lon);
-        next();
+        res.redirect(`/${name}`);
     }
     catch (error) {
         res.redirect('/');
     }
-}), (_req, res) => {
-    let weather_data = res.locals.weather_data;
-    res.render('index');
-});
-//TODO: app.get with params
+}));
 app.get('/:location', (_req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     let location = _req.params.location;
     try {
