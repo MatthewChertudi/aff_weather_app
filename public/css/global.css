@@ -45,7 +45,7 @@ body::after {
     right: 0;
     bottom: 0;
     background-image: url("/images/crt-scanlines.png");
-    opacity: 0.15;
+    opacity: 0.12;
     z-index: 51;
   }
 
