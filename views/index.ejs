@@ -47,12 +47,12 @@
       </div>
 
       <%# TODO: Reverse test, add weather_data.alert to paragraph %>
-        <% if(!weather_data.alert) { %>
+        <% if(weather_data.alert) { %>
           <div class="weather-alert">
             <div class="component-head">
               <h3><span><img src="icons/mono/svg-static/code-yellow.svg" class="svg-icon-mono"></span>Weather Alert</h3>
             </div>
-            <p>Weather alert description.</p>
+            <p><%= weather_data.alert %></p>
           </div>
           <% } %>
 
@@ -82,51 +82,74 @@
                   <div class="component-head">
                     <h3>UV Index</h3>
                   </div>
-                  <img src="icons/filled/svg/<%= weather_data.current.uv_icon %>.svg"
-                      alt="">
+                  <img src="icons/filled/svg/<%= weather_data.current.uv_icon %>.svg" alt="">
                   <p>Recommendation</p>
-                  <p><%= weather_data.current.uv_description %>
-                  </p>
-                </div>
-                <div class="others__one-by-one">
-                  <h3>Wind Speed</h3>
                   <p>
-                    <%= weather_data.current.wind_speed %>mph
-                  </p>
-                  <p>
-                    <%= weather_data.current.wind_direction %>
+                    <%= weather_data.current.uv_description %>
                   </p>
                 </div>
                 <div class="others__one-by-one">
-                  <h3>Feels Like</h3>
-                  <h4>
-                    <%= weather_data.current.feels_like %>°F
-                  </h4>
+                  <div class="component-head">
+                    <h3>Wind Speed</h3>
+                  </div>
+                  <div class="wind-speed">
+                    <p>
+                      <%= weather_data.current.wind_speed %>mph
+                    </p>
+                    <img src="icons/filled/svg/wind.svg" alt="">
+                    <p>
+                      <%= weather_data.current.wind_direction %>
+                    </p>
+                  </div>
                 </div>
                 <div class="others__one-by-one">
-                  <h3>Humidity</h3>
-                  <h4>
-                    <%= weather_data.current.humidity %>%
-                  </h4>
+                  <div class="component-head">
+
+                    <h3>Feels Like</h3>
+                  </div>
+                  <div class="feels-humid">
+                    <h4>
+                      <%= weather_data.current.feels_like %>°F
+                    </h4>
+                    <img src="icons/filled/svg/thermometer.svg" alt="">
+                  </div>
+                </div>
+                <div class="others__one-by-one">
+                  <div class="component-head">
+                    <h3>Humidity</h3>
+                  </div>
+                  <div class="feels-humid">
+                    <h4>
+                      <%= weather_data.current.humidity %>%
+                    </h4>
+                    <img src="icons/filled/svg/humidity.svg" alt="">
+                  </div>
 
                 </div>
                 <div class="others__one-by-one">
-                  <h3>Precipitation</h3>
-                  <% if(!weather_data.current.snow) { %>
-                    <h4>Rain</h4>
-                    <%# TODO: Replace with rain icon 10n.png %>
-                      <p>Last hour: <%= weather_data.current.rain %>mm</p>
-                      <p>Today: <%= weather_data.daily[1].total_rain %>mm</p>
+                  <div class="component-head">
+                    <h3>Precipitation</h3>
+                  </div>
+                  <div class="feels-humid">
+                      <% if(!weather_data.current.snow) { %>
+
+                        <div>
+                          <p>1hr: <%= weather_data.current.rain %>mm</p>
+                          <p>24hr: <%= weather_data.daily[1].total_rain %>mm</p>
+                        </div>
+                        <img src="icons/filled/svg/rain.svg" alt="">
                       <% } else { %>
                         <h4>Snow</h4>
-                        <%# TODO: Replace with snow icon 13d.png %>
+                        <div>
                           <p>Last hour: <%= weather_data.current.snow %>mm</p>
                           <p>Today: <%= weather_data.daily[1].total_snow %>mm</p>
-                          <% } %>
+                        </div>
+                        <img src="icons/filled/svg/snow.svg" alt="">
+                        <% } %>
+                      </div>
                 </div>
               </div>
             </div>
-            <script src="script.js"></script> <!-- Link to your JavaScript file -->
 </body>
 
 </html>

@@ -19,12 +19,12 @@ body {
     background-image: url("/images/clouds_background.jpeg");
     position: relative;
     /* Variables */
-    --transprent-bg: rgb(6 86 217 / 30%);
+    --transprent-bg: rgba(16, 30, 52, 0.3);
     --border-radius: 0.5rem;
     --bottom-hr: 1px solid rgb(255 255 255 / 25%)
 }
 
-/* body::before {
+body::before {
     content: "";
     position: absolute;
     top: 0;
@@ -44,9 +44,7 @@ body::after {
     bottom: 0;
     background-image: url("/images/crt-scanlines.png");
     opacity: 0.15;
-  } */
-
-
+  }
 
 .container {
     padding: 3rem;
@@ -133,13 +131,14 @@ body::after {
 }
 
 .component-head h3 {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 400;
     line-height: 1.33;
     margin-bottom: 0.5rem;
 }
 
 .details-grid {
+    margin-top: 2rem;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 2rem;
@@ -197,7 +196,7 @@ body::after {
     align-items: center;
     background-color: var(--transprent-bg);
     border-radius: var(--border-radius);
-    padding: 1rem 2rem 2rem;
+    padding: 1rem 2rem 1rem;
 }
 .uv-index-and-others .uv-index img{
     height: 128px;
@@ -214,4 +213,30 @@ body::after {
     grid-row: span 1;
     background-color: var(--transprent-bg);
     border-radius: var(--border-radius);
+    padding: 1rem 2rem 1rem;
+}
+.others__one-by-one .wind-speed{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.others__one-by-one .wind-speed img{
+    height: 64px;
+}
+.others__one-by-one .feels-humid{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 55%;
+}
+.others__one-by-one .feels-humid h4{
+    font-size: 2.5rem;
+    font-weight: 400;
+    line-height: 1;
+}
+.others__one-by-one .feels-humid div{
+    margin-right: 1rem;
+}
+.others__one-by-one .feels-humid img{
+    height: 64px;
 }
