@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getWeatherIcon = void 0;
+exports.getUVIcon = exports.getWeatherIcon = void 0;
 // A realy simple (but tedious to create) service to get the icon name from the weather code
 function getWeatherIcon(weatherCode) {
     let icon = '';
@@ -107,3 +107,14 @@ function getWeatherIcon(weatherCode) {
     return icon;
 }
 exports.getWeatherIcon = getWeatherIcon;
+function getUVIcon(uvi) {
+    let icon = '';
+    if (Math.round(uvi) === 0) {
+        icon = 'clear-night';
+    }
+    else {
+        icon = `uv-index-${Math.round(uvi)}`;
+    }
+    return icon;
+}
+exports.getUVIcon = getUVIcon;

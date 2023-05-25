@@ -2,7 +2,7 @@ import { Response } from 'express';
 import fetch from 'node-fetch';
 import { AggregateData } from '../types/types';
 import dotenv from 'dotenv';
-import { getWeatherIcon } from './icons';
+import { getWeatherIcon, getUVIcon } from './icons';
 
 dotenv.config();
 
@@ -47,6 +47,21 @@ export async function getLatLongFromCityName(cityName: string): Promise<{ lat: s
   }
 }
 
+const uvIndexRecommendations = [
+  "No protection needed.",
+  "No protection needed.",
+  "Seek shade during midday hours, wear sunscreen, and cover up.",
+  "Seek shade during midday hours, wear sunscreen, and cover up.",
+  "Seek shade during midday hours, wear sunscreen, and cover up.",
+  "Take precautions - seek shade, wear protective clothing, and use sunscreen.",
+  "Take precautions - seek shade, wear protective clothing, and use sunscreen.",
+  "Stay in shade near midday, wear protective clothing, and apply SPF 30+ sunscreen.",
+  "Stay in shade near midday, wear protective clothing, and apply SPF 30+ sunscreen.",
+  "Avoid sun exposure as much as possible.",
+  "Avoid sun exposure as much as possible.",
+  "Avoid sun exposure as much as possible."
+];
+
 export async function getWeatherData(res: Response, lat: string, lon: string): Promise<AggregateData> {
   let api_key = process.env.OPEN_WEATHER_API_KEY;
   let aggregateData: AggregateData = {
@@ -63,6 +78,8 @@ export async function getWeatherData(res: Response, lat: string, lon: string): P
       wind_speed: '',
       wind_direction: '',
       uv_index: '',
+      uv_icon: '',
+      uv_description: '',
       humidity: '',
     },
     daily: [],
@@ -116,7 +133,9 @@ export async function getWeatherData(res: Response, lat: string, lon: string): P
         weather_description: weather_data.current.weather[0].description,
         wind_speed: Math.round(weather_data.current.wind_speed),
         wind_direction: convertDegreesToDirection(weather_data.current.wind_deg),
-        uv_index: weather_data.current.uvi,
+        uv_index: Math.round(weather_data.current.uvi),
+        uv_icon: getUVIcon(Math.round(weather_data.current.uvi)),
+        uv_description: uvIndexRecommendations[Math.round(weather_data.current.uvi)],
         humidity: weather_data.current.humidity,
         rain: weather_data.current.rain ? Math.round(weather_data.current.rain['1h']) : 0,
         snow: weather_data.current.snow ? Math.round(weather_data.current.snow['1h']) : 0,

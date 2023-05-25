@@ -103,3 +103,13 @@ export function getWeatherIcon(weatherCode: number): string {
     }
     return icon
 }
+
+export function getUVIcon(uvi: number): string {
+    let icon = '';
+    if (Math.round(uvi) === 0){
+        icon = 'clear-night'
+    } else {
+        icon = `uv-index-${Math.round(uvi)}`
+    }
+    return icon
+}

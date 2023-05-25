@@ -22,7 +22,9 @@ export type AggregateData = {
         wind_speed: any;
         wind_direction: any;
         uv_index: any;
+        uv_icon: any;
         humidity: any;
+        uv_description: any;
         rain: any;
         snow: any;
     };

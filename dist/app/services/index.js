@@ -54,6 +54,20 @@ function getLatLongFromCityName(cityName) {
     });
 }
 exports.getLatLongFromCityName = getLatLongFromCityName;
+const uvIndexRecommendations = [
+    "No protection needed.",
+    "No protection needed.",
+    "Seek shade during midday hours, wear sunscreen, and cover up.",
+    "Seek shade during midday hours, wear sunscreen, and cover up.",
+    "Seek shade during midday hours, wear sunscreen, and cover up.",
+    "Take precautions - seek shade, wear protective clothing, and use sunscreen.",
+    "Take precautions - seek shade, wear protective clothing, and use sunscreen.",
+    "Stay in shade near midday, wear protective clothing, and apply SPF 30+ sunscreen.",
+    "Stay in shade near midday, wear protective clothing, and apply SPF 30+ sunscreen.",
+    "Avoid sun exposure as much as possible.",
+    "Avoid sun exposure as much as possible.",
+    "Avoid sun exposure as much as possible."
+];
 function getWeatherData(res, lat, lon) {
     return __awaiter(this, void 0, void 0, function* () {
         let api_key = process.env.OPEN_WEATHER_API_KEY;
@@ -71,6 +85,8 @@ function getWeatherData(res, lat, lon) {
                 wind_speed: '',
                 wind_direction: '',
                 uv_index: '',
+                uv_icon: '',
+                uv_description: '',
                 humidity: '',
             },
             daily: [],
@@ -109,7 +125,9 @@ function getWeatherData(res, lat, lon) {
                     weather_description: weather_data.current.weather[0].description,
                     wind_speed: Math.round(weather_data.current.wind_speed),
                     wind_direction: convertDegreesToDirection(weather_data.current.wind_deg),
-                    uv_index: weather_data.current.uvi,
+                    uv_index: Math.round(weather_data.current.uvi),
+                    uv_icon: (0, icons_1.getUVIcon)(Math.round(weather_data.current.uvi)),
+                    uv_description: uvIndexRecommendations[Math.round(weather_data.current.uvi)],
                     humidity: weather_data.current.humidity,
                     rain: weather_data.current.rain ? Math.round(weather_data.current.rain['1h']) : 0,
                     snow: weather_data.current.snow ? Math.round(weather_data.current.snow['1h']) : 0,
