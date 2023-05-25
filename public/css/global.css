@@ -24,7 +24,8 @@ body {
     --bottom-hr: 1px solid rgb(255 255 255 / 25%)
 }
 
-body::before {
+/* TODO: Uncomment to restore scanline effect */
+/* body::before {
     content: "";
     position: absolute;
     top: 0;
@@ -46,7 +47,7 @@ body::after {
     background-image: url("/images/crt-scanlines.png");
     opacity: 0.15;
     z-index: 51;
-  }
+  } */
 
 .container {
     padding: 3rem;
@@ -59,7 +60,7 @@ body::after {
     height: 100%;
 }
 
-.container .search{
+.container .search {
     width: auto;
     max-width: 526px;
     background-color: var(--transprent-bg);
@@ -69,13 +70,14 @@ body::after {
     z-index: 99;
     align-self: flex-end;
 }
+
 .container .search input,
-.container .search input::placeholder{
+.container .search input::placeholder {
     font-size: 1.2rem;
     font-weight: 500;
 }
 
-.container .search input{
+.container .search input {
     height: 2rem;
     margin-right: 1rem;
     border-style: none;
@@ -84,10 +86,12 @@ body::after {
     padding: .25rem .5rem;
     color: #FFF;
 }
-.container .search input::placeholder{
+
+.container .search input::placeholder {
     color: rgba(255, 255, 255, 0.25);
 }
-.container .search button{
+
+.container .search button {
     font-size: 1.2rem;
     padding: 0 1rem;
     border: none;
@@ -163,10 +167,11 @@ body::after {
     background: var(--transprent-bg);
     width: 80%;
     max-width: 526px;
-    padding: 1rem ;
+    padding: 1rem;
     border-radius: var(--border-radius);
     margin-bottom: 2rem;
 }
+
 .component-head {
     width: 100%;
     border-bottom: var(--bottom-hr);
@@ -188,37 +193,40 @@ body::after {
     width: 100%;
 }
 
-.details-grid .details-grid__seven-day-forecast{
+.details-grid .details-grid__seven-day-forecast {
     grid-column: span 2;
     background-color: var(--transprent-bg);
     border-radius: var(--border-radius);
     padding: 1rem 2rem 2rem;
 }
+
 .details-grid__seven-day-forecast p {
     font-size: 1rem;
     color: white;
 }
-.details-grid__seven-day-forecast .seven-day-forecast__day{
+
+.details-grid__seven-day-forecast .seven-day-forecast__day {
     display: flex;
     align-items: center;
     border-bottom: var(--bottom-hr);
 }
-.seven-day-forecast__day .day-of-the-week{
+
+.seven-day-forecast__day .day-of-the-week {
     width: 6rem;
 }
-.details-grid__seven-day-forecast .seven-day-forecast__day img{
+
+.details-grid__seven-day-forecast .seven-day-forecast__day img {
     height: 64px;
     margin-right: 2rem;
 }
+
 .seven-day-forecast__day .seven-day-forecast__day__high,
-.seven-day-forecast__day .seven-day-forecast__day__low{
+.seven-day-forecast__day .seven-day-forecast__day__low {
     width: 4rem;
     margin-right: 1rem;
 }
-.seven-day-forecast__day .seven-day-forecast__pop{
-    margin-left: 1rem;
-}
-.details-grid .uv-index-and-others{
+
+.details-grid .uv-index-and-others {
     grid-column: span 2;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -226,12 +234,13 @@ body::after {
     grid-gap: 2rem;
     border-radius: var(--border-radius);
 }
+
 .uv-index-and-others p {
     font-size: 1rem;
     color: white;
 }
 
-.uv-index-and-others .uv-index{
+.uv-index-and-others .uv-index {
     grid-column: span 2;
     grid-row: span 2;
     display: flex;
@@ -241,45 +250,125 @@ body::after {
     border-radius: var(--border-radius);
     padding: 1rem 2rem 1rem;
 }
-.uv-index-and-others .uv-index img{
+
+.uv-index-and-others .uv-index img {
     height: 128px;
 }
+
 .uv-index-and-others .uv-index p {
     align-self: flex-start;
 }
+
 .uv-index-and-others .uv-index p:first-of-type {
     font-weight: 700;
 }
 
-.uv-index-and-others .others__one-by-one{
+.uv-index-and-others .others__one-by-one {
     grid-column: span 1;
     grid-row: span 1;
     background-color: var(--transprent-bg);
     border-radius: var(--border-radius);
     padding: 1rem 2rem 1rem;
 }
-.others__one-by-one .wind-speed{
+
+.others__one-by-one .wind-speed {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-.others__one-by-one .wind-speed img{
+
+.others__one-by-one .wind-speed img {
     height: 64px;
 }
-.others__one-by-one .feels-humid{
+
+.others__one-by-one .feels-humid {
     display: flex;
     flex-direction: row;
     align-items: center;
     height: 55%;
 }
-.others__one-by-one .feels-humid h4{
+
+.others__one-by-one .feels-humid h4 {
     font-size: 2.5rem;
     font-weight: 400;
     line-height: 1;
 }
-.others__one-by-one .feels-humid div{
+
+.others__one-by-one .feels-humid div {
     margin-right: 1rem;
 }
-.others__one-by-one .feels-humid img{
+
+.others__one-by-one .feels-humid img {
     height: 64px;
+}
+
+@media screen and (max-width: 1080px) {
+
+    /* TODO: Remove 1080px canary */
+    * {
+        color: hotpink;
+    }
+
+    .details-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    /* TODO: Remove 1080px canary */
+    * {
+        color: lime;
+    }
+
+    .container .search {
+        width: 100%;
+    }
+    
+    .container .search input,
+    .container .search input::placeholder {
+        font-size: 1.2rem;
+        font-weight: 500;
+    }
+    
+    .container .search input {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+    
+    .container .search button {
+        width: 100%;
+    }
+
+    .details-grid__seven-day-forecast p {
+        font-size: 1rem;
+        color: white;
+    }
+
+    .details-grid__seven-day-forecast .seven-day-forecast__day {
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 2rem;
+        border-bottom: var(--bottom-hr);
+    }
+
+    .seven-day-forecast__day .day-of-the-week {
+        width: 100%;
+        font-size: 1.25rem;
+        font-weight: 500;
+    }
+
+    .details-grid__seven-day-forecast .seven-day-forecast__day img {
+        height: 96px;
+        margin-right: 0;
+        width: 100%;
+    }
+
+    .seven-day-forecast__day .seven-day-forecast__day__high,
+    .seven-day-forecast__day .seven-day-forecast__day__low {
+        width: 4rem;
+        margin-right: 1rem;
+    }
 }
